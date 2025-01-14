@@ -1,0 +1,8 @@
+# Bibliothèque principale pour l'interface graphique
+tkinter
+
+# Autres bibliothèques utiles pour le développement, la gestion des versions et la documentation
+black               # Outil de formatage automatique du code
+flake8              # Linter pour vérifier la qualité du code
+pytest              # Framework de tests unitaires
+sphinx              # Outil de génération de documentation
