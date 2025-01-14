@@ -1,0 +1,20 @@
+LICENCE D'UTILISATION
+
+Nom du logiciel : Text Or
+Version : 1.4
+
+Droits d'auteur (c) 2025, Text Or par Prince MOUNANGA, Tous droits réservés.
+
+1. **Licence d'utilisation personnelle** : 
+   Vous avez le droit d'utiliser cette application pour des fins personnelles et non commerciales.
+
+2. **Licence d'utilisation commerciale** : 
+   Pour un usage commercial, un achat de licence supplémentaire est requis.
+
+3. **Restrictions** :
+   Vous ne pouvez pas distribuer, vendre ou modifier ce logiciel sans autorisation préalable.
+
+4. **Garantie** :
+   Ce logiciel est fourni tel quel. Le créateur décline toute responsabilité en cas de dommage ou de perte de données.
+
+Pour plus d'informations, contactez le support à l'adresse email suivante : prince.amateba@codix-ga.com
