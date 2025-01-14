@@ -15,7 +15,7 @@
 ## Installation
 
 Clonez ce repository :
-   git clone https://github.com/votre-utilisateur/Text-Or.git
+   git clone https://github.com/prince160/Text-Or.git
    
 Installez les dépendances requises :
 pip install -r requirements.txt
