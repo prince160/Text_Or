@@ -5,7 +5,7 @@ dark = {
         "bg": "#1C1C1C",
         "fg": "#FFD700",
         "text_bg": "#333333",
-        "text_fg": "#FFD700",
+        "text_fg": "#ffffff",
     }
 
 light = {

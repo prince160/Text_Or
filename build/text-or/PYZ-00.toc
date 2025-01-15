@@ -137,6 +137,7 @@
   ('tarfile', 'C:\\Python312\\Lib\\tarfile.py', 'PYMODULE'),
   ('tempfile', 'C:\\Python312\\Lib\\tempfile.py', 'PYMODULE'),
   ('textwrap', 'C:\\Python312\\Lib\\textwrap.py', 'PYMODULE'),
+  ('themeDef', 'C:\\wamp64\\www\\APP_desk_Text_Or\\themeDef.py', 'PYMODULE'),
   ('threading', 'C:\\Python312\\Lib\\threading.py', 'PYMODULE'),
   ('tkinter', 'C:\\Python312\\Lib\\tkinter\\__init__.py', 'PYMODULE'),
   ('tkinter.commondialog',

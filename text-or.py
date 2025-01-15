@@ -13,7 +13,26 @@ def open_file():
         text_input.delete("1.0", tk.END)
         text_input.insert(tk.END, content)
 
+# Variable pour suivre le fichier actuellement ouvert
+current_file = None
+
 def save_text():
+    global current_file
+    text = text_input.get("1.0", tk.END).strip()
+    if not text:
+        messagebox.showwarning("Attention", "Veuillez entrer du texte avant d'enregistrer.")
+        return
+    
+    # Si un fichier est déjà ouvert, on l'écrase
+    if current_file:
+        with open(current_file, "w", encoding="utf-8") as file:
+            file.write(text)
+        messagebox.showinfo("Succès", "Fichier enregistré avec succès !")
+    else:
+        # Sinon, on lance "Enregistrer sous"
+        save_as_text()
+
+def save_as_text():
     text = text_input.get("1.0", tk.END).strip()
     if not text:
         messagebox.showwarning("Attention", "Veuillez entrer du texte avant d'enregistrer.")
@@ -25,7 +44,10 @@ def save_text():
     if file_path:
         with open(file_path, "w", encoding="utf-8") as file:
             file.write(text)
-        messagebox.showinfo("Succès", "Texte enregistré avec succès !")
+        global current_file
+        current_file = file_path  # Met à jour le fichier actuel
+        messagebox.showinfo("Succès", "Fichier enregistré avec succès !")
+
 
 def quit_app():
     if messagebox.askyesno("Quitter", "Voulez-vous vraiment quitter ?"):
@@ -41,9 +63,6 @@ def apply_theme(colors):
     text_input.configure(bg=colors["text_bg"], fg=colors["text_fg"])
     stats_label.configure(bg=colors["bg"], fg=colors["fg"])
     encoding_label.configure(bg=colors["bg"], fg=colors["fg"])  # Ajout pour le label d'encodage
-
-
-
 
 def clear_text():
     text_input.delete("1.0", tk.END)
@@ -66,7 +85,6 @@ def update_stats(event=None):
     stats_label.config(
         text=f"Mots : {word_count} | Caractères : {char_count} | Temps de lecture : {reading_time} min"
     )
-
 
 def highlight_syntax(event=None):
     text = text_input.get("1.0", tk.END)
@@ -110,25 +128,22 @@ def show_help():
 def show_about():
     about_info = """
     Éditeur de texte "Text-Or" version 1.4
-    Développé par Prince MOUNANGA en Python avec Tkinter.
+    Python avec Tkinter
+    Open source: Contribution via git-hub/prince160
+    Développeur initial: Prince MOUNANGA.
     """
     messagebox.showinfo("À propos", about_info)
 
 def show_context_menu(event):
     context_menu.tk_popup(event.x_root, event.y_root)
 
-
 def toggle_fullscreen():
     app.attributes("-fullscreen", not app.attributes("-fullscreen"))
-
 
 def exit_fullscreen():
     app.attributes("-fullscreen", False)
 
 def update_scrollbar():
-    """
-    Affiche ou masque la barre de défilement en fonction du contenu de la zone de texte.
-    """
     text_height = text_input.count("1.0", tk.END, "pixels")[1]
     visible_height = text_frame.winfo_height()
 
@@ -165,7 +180,7 @@ text_input = tk.Text(
     text_frame,
     wrap=tk.WORD,
     undo=True,
-    font=("Courier", 12),
+    font=("Arial", 13),
     yscrollcommand=scroll_bar.set,
 )
 scroll_bar.config(command=text_input.yview)
@@ -179,11 +194,11 @@ info_frame = tk.Frame(app)
 info_frame.pack(fill=tk.X, padx=10, pady=5)
 
 # Label pour le type d'encodage, aligné à gauche
-encoding_label = tk.Label(info_frame, text="UTF-8", anchor="w", font=("Helvetica", 10))
+encoding_label = tk.Label(info_frame, text="UTF-8", anchor="w", font=("Arial", 10))
 encoding_label.pack(side="left")  # Un peu d'espace à droite
 
 # Label pour les statistiques, aligné à droite
-stats_label = tk.Label(info_frame, text="", anchor="e", font=("Helvetica", 10))
+stats_label = tk.Label(info_frame, text="", anchor="e", font=("Arial", 10))
 stats_label.pack(side="right", expand=True, fill=tk.X)
 
 # Menu principal
@@ -192,11 +207,13 @@ app.config(menu=menu_bar)
 
 # Menu "Fichier"
 file_menu = Menu(menu_bar, tearoff=0)
-file_menu.add_command(label="Ouvrir", command=open_file)
-file_menu.add_command(label="Enregistrer", command=save_text)
+file_menu.add_command(label="Ouvrir...     ", command=open_file)
+file_menu.add_command(label="Enregistrer sous       ", command=save_as_text)  # Nouveau menu "Enregistrer sous"
+file_menu.add_command(label="Enregistrer...     ", command=save_text)
 file_menu.add_separator()
 file_menu.add_command(label="Quitter", command=quit_app)
 menu_bar.add_cascade(label="Fichier", menu=file_menu)
+
 
 # Menu "Affichage"
 view_menu = Menu(menu_bar, tearoff=0)
