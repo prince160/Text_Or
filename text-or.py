@@ -1,4 +1,5 @@
 import tkinter as tk
+import themeDef
 from tkinter import filedialog, messagebox, Menu, ttk, Label
 
 # Fonctionnalités principales
@@ -31,23 +32,18 @@ def quit_app():
         app.destroy()
 
 
-def toggle_theme():
-    global dark_mode
-    dark_mode = not dark_mode
-    apply_theme()
+def toggle_theme(colors):
+    apply_theme(colors)
 
-def apply_theme():
-    colors = {
-        "bg": "#1C1C1C" if dark_mode else "#FFFFFF",
-        "fg": "#FFD700" if dark_mode else "#000000",
-        "text_bg": "#333333" if dark_mode else "#F5F5F5",
-        "text_fg": "#FFD700" if dark_mode else "#000000",
-    }
+def apply_theme(colors):
     # Appliquer les couleurs à la fenêtre principale et aux widgets compatibles
     app.configure(bg=colors["bg"])
     text_input.configure(bg=colors["text_bg"], fg=colors["text_fg"])
     stats_label.configure(bg=colors["bg"], fg=colors["fg"])
     encoding_label.configure(bg=colors["bg"], fg=colors["fg"])  # Ajout pour le label d'encodage
+
+
+
 
 def clear_text():
     text_input.delete("1.0", tk.END)
@@ -206,8 +202,15 @@ menu_bar.add_cascade(label="Fichier", menu=file_menu)
 view_menu = Menu(menu_bar, tearoff=0)
 view_menu.add_command(label="Plein écran", command=toggle_fullscreen)
 view_menu.add_command(label="Réduire l'écran", command=exit_fullscreen)
-view_menu.add_command(label="Mode clair/sombre", command=toggle_theme)
 menu_bar.add_cascade(label="Affichage", menu=view_menu)
+
+# Sous-Menu "Theme"
+theme_menu = Menu(menu_bar, tearoff=0)
+theme_menu.add_command(label="dark", command=lambda : toggle_theme(themeDef.dark))
+theme_menu.add_command(label="light", command=lambda : toggle_theme(themeDef.light))
+theme_menu.add_command(label="solarized Sombre", command=lambda : toggle_theme(themeDef.solarizedDark))
+theme_menu.add_command(label="solarized Clair", command=lambda : toggle_theme(themeDef.solarizedClear))
+view_menu.add_cascade(label="theme", menu=theme_menu)
 
 # Menu "Édition"
 edit_menu = Menu(menu_bar, tearoff=0)
@@ -228,7 +231,7 @@ context_menu.add_command(label="Copier", command=lambda: app.event_generate("<<C
 context_menu.add_command(label="Coller", command=lambda: app.event_generate("<<Paste>>"))
 
 # Appliquer le thème initial
-apply_theme()
+apply_theme(themeDef.dark)
 
 # Lancement de l'application
 app.mainloop()
